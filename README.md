@@ -1,6 +1,6 @@
 # CS225_EC_Project
 # Project Summary
-    For our project, we decide to do 
+    For our project, we decide to do random forest algorithm
 # Code
     Contain the code of the project
 # Data
