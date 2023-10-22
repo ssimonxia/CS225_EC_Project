@@ -72,6 +72,16 @@ TEST_CASE("aStar_2") {
     REQUIRE(actual[1].first == 2 && actual[1].second == 2);
 }
 
+TEST_CASE("aStar_3") {
+    std::string file = "test_grid_width150_height170(0).txt";
+    AStart astar;
+    astar.converttogrid(file);
+    double h = [](std::pair<int,int> curr, std::pair<int,int> destination){
+        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+    }
+    std::vector<std::pair<int, int>> actual = aStar(astar.start, astar.goal, astar.grid, h);
+    REQUIRE(actual.size() <= 1.25*173);
+}
 
 TEST_CASE("getNeighbor_1") {
     std::string file = "test_grid_width5_height5(0).txt";
