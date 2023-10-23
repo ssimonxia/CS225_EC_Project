@@ -68,8 +68,9 @@ TEST_CASE("aStar_2") {
     }
     std::vector<std::pair<int, int>> actual = aStar(astar.start, astar.goal, astar.grid, h);
     REQUIRE(actual.size()==2);
-    REQUIRE(actual[0].first == 134 && actual[0].second == 8);
-    REQUIRE(actual.back().first == 91 && actual.back().second == 157);
+    REQUIRE(actual[0].first == 4 && actual[0].second == 3);
+    REQUIRE(actual[1].first == 4 && actual[1].second == 2);
+    
 }
 
 TEST_CASE("aStar_3") {
@@ -81,7 +82,8 @@ TEST_CASE("aStar_3") {
     }
     std::vector<std::pair<int, int>> actual = aStar(astar.start, astar.goal, astar.grid, h);
     REQUIRE(actual.size() <= 1.25*173);
-    REQUIRE(actual[0].first == 3 && actual[0].second == 2
+    REQUIRE(actual[0].first == 134 && actual[0].second == 8);
+    REQUIRE(actual.back().first == 91 && actual.back().second == 157);
 }
 
 TEST_CASE("getNeighbor_1") {
