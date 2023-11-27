@@ -22,7 +22,7 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
                     break;
                 }
                 path.push_back(make_pair(current.first, current.second));
-                cout<<current.first<<" "<<current.second<<endl;
+                //cout<<current.first<<" "<<current.second<<endl;
                 current = parentcell[current];
                 flag++;
             }
@@ -34,14 +34,16 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
         double minn = 999999;
         pair<int, int> tt;
         for(auto it = neighbors.begin(); it != neighbors.end(); ++it){
-            if(h(make_pair(it->first, it->second), make_pair(target.first, target.second)) < minn){
-                parentcell[make_pair(it->first, it->second)] = current;
-                tt = make_pair(it->first, it->second);
-                minn = h(make_pair(it->first, it->second), make_pair(target.first, target.second));
+            if((parentcell.find(*it) == parentcell.end()) 
+            &&(h(*it, target) <= minn)){
+                parentcell[*it] = current;
+                tt = *it;
+                minn = h(*it, target);
+                astarqueue.push(tt);
             }
         }
-        astarqueue.push(make_pair(tt.first, tt.second));
-        cout<<"check: "<<tt.first<<" "<<tt.second<<endl;
+        
+        //cout<<"check: "<<tt.first<<" "<<tt.second<<endl;
     }
     return empty;
 }
