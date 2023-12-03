@@ -213,7 +213,7 @@ TEST_CASE("aStar_Super") {
     for(int i = 0; i < 1; i++){
         for(int j = 200; j <= 2000; j+=100) {
             for(int k = 200; k <= 2000; k+=100) {
-                std::string file = "../data/Super/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::string file = "../data/Super(200-2000)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
                 std::ifstream f(file);
                 if (!f.is_open()){
                     continue;
@@ -238,7 +238,7 @@ TEST_CASE("aStar_Extreme") {
     for(int i = 0; i < 5; i++){
         for(int j = 2000; j <= 20000; j+=2000) {
             for(int k = 2000; k <= 20000; k+=2000) {
-                std::string file = "../data/Super/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::string file = "../data/Extreme(2000+)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
                 std::ifstream f(file);
                 if (!f.is_open()){
                     continue;
@@ -279,7 +279,7 @@ TEST_CASE("aStarSearch_Small") {
                     //std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
                     //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
                     //REQUIRE(int(actual.size()) == int(bfs.size()));
-                    REQUIRE(int(actual.size()) <= 1.2* (astar.bestDis + 1));
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
                 }
             }
         }
@@ -304,12 +304,91 @@ TEST_CASE("aStarSearch_Medium") {
                     //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
                     std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
                     //REQUIRE(int(actual.size()) == int(bfs.size()));
-                    REQUIRE(int(actual.size()) <= 1.2* (astar.bestDis + 1));
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
                 }
             }
         }
     }
 }
+
+TEST_CASE("aStarSearch_Large") {
+    for (int i = 0; i < 5; i++) {
+        for(int j = 2000; j <= 20000; j+=2000) {
+            for(int k = 2000; k <= 20000; k+=2000) {
+                std::string file = "../data/Large(50-200)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStarSearch(astar.grid, astar.start, astar.end, h);
+                    //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
+                    std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    //REQUIRE(int(actual.size()) == int(bfs.size()));
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("aStarSearch_Super") {
+    for (int i = 0; i < 1; i++) {
+        for(int j = 200; j <= 2000; j+=100) {
+            for(int k = 200; k <= 2000; k+=100) {
+                std::string file = "../data/Super(200-2000)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStarSearch(astar.grid, astar.start, astar.end, h);
+                    //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
+                    std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    //REQUIRE(int(actual.size()) == int(bfs.size()));
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("aStarSearch_Extreme") {
+    for (int i = 0; i < 1; i++) {
+        for(int j = 200; j <= 2000; j+=100) {
+            for(int k = 200; k <= 2000; k+=100) {
+                std::string file = "../data/Extreme(2000+)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStarSearch(astar.grid, astar.start, astar.end, h);
+                    //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
+                    std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    //REQUIRE(int(actual.size()) == int(bfs.size()));
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+
+
+
 
 TEST_CASE("getNeighbor_1") {
     std::string file = "../data/Small(5-10)/test_grid_width5_height5(2).txt";
