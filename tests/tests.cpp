@@ -102,7 +102,7 @@ TEST_CASE("aStar_4") {
         return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
     };
     std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
-    REQUIRE(actual.size() <= 1.25*28);
+    REQUIRE(actual.size() == 29);
 }
 
 
@@ -114,7 +114,7 @@ TEST_CASE("aStar_5") {
         return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
     };
     std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
-    REQUIRE(actual.size() <= 1.25*5);
+    REQUIRE(actual.size() == 6);
 }
 
 TEST_CASE("aStar_6") {
@@ -125,7 +125,7 @@ TEST_CASE("aStar_6") {
         return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
     };
     std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
-    REQUIRE(actual.size() <= 1.25*18);
+    REQUIRE(actual.size() == 19);
 }
 
 TEST_CASE("aStar_7") {
@@ -136,7 +136,103 @@ TEST_CASE("aStar_7") {
         return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
     };
     std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
-    REQUIRE(actual.size() <= 1.25*35);
+    REQUIRE(actual.size() == 36);
+}
+
+TEST_CASE("aStar_Small") {
+    for (int i = 0; i < 5; i++) {
+        for(int j = 5; j <= 10; j++) {
+            for(int k = 5; k <= 10; k++) {
+                std::string file = "../data/Small(5-10)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
+                    //std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("aStar_Medium") {
+    for (int i = 0; i < 3; i++) {
+        for(int j = 10; j <= 50; j+=5) {
+            for(int k = 10; k <= 50; k+=5) {
+                std::string file = "../data/Medium(10-50)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStar(astar.start, astar.end, astar.grid, h);
+                    std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    REQUIRE(int(actual.size()) == (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("aStarSearch_Small") {
+    for (int i = 0; i < 5; i++) {
+        for(int j = 5; j <= 10; j++) {
+            for(int k = 5; k <= 10; k++) {
+                std::string file = "../data/Small(5-10)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStarSearch(astar.grid ,astar.start, astar.end, h);
+                    //std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
+                    //REQUIRE(int(actual.size()) == int(bfs.size()));
+                    REQUIRE(int(actual.size()) <= 1.2* (astar.bestDis + 1));
+                }
+            }
+        }
+    }
+}
+
+TEST_CASE("aStarSearch_Medium") {
+    for (int i = 0; i < 3; i++) {
+        for(int j = 10; j <= 50; j+=5) {
+            for(int k = 10; k <= 50; k+=5) {
+                std::string file = "../data/Medium(10-50)/test_grid_width"+std::to_string(j)+"_height"+std::to_string(k)+"("+std::to_string(i)+").txt";
+                std::ifstream f(file);
+                if (!f.is_open()){
+                    continue;
+                } else {
+                    Astar astar;
+                    astar.converttogrid(file);
+                    auto h = [](std::pair<int,int> curr, std::pair<int,int> destination) -> double {
+                        return std::sqrt(std::pow(destination.first - curr.first, 2) + std::pow(destination.second - curr.second, 2));
+                    };
+                    std::vector<std::pair<int, int>> actual = astar.aStarSearch(astar.grid, astar.start, astar.end, h);
+                    //std::vector<std::pair<int, int>> bfs = astar.BFS(astar.start, astar.end, astar.grid);
+                    std::cout<<file<<": "<<astar.bestDis+1<<std::endl;
+                    //REQUIRE(int(actual.size()) == int(bfs.size()));
+                    REQUIRE(int(actual.size()) <= 1.2* (astar.bestDis + 1));
+                }
+            }
+        }
+    }
 }
 
 TEST_CASE("getNeighbor_1") {

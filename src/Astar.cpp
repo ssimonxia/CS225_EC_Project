@@ -22,21 +22,24 @@ void Astar::converttogrid(string infile) {
         if (flag == 0) {
             int countt = 0;
             string tmp = "";
-            for(char i : s) {
-                if (i == ' ' && countt == 0){
+            for(auto i = s.begin(); i != s.end(); i++) {
+                if (*i != ' '){
+                    tmp += *i;
+                }
+                if (*i == ' ' && countt == 0){
                     width = stoi(tmp);
                     tmp = "";
                     countt++;
-                } else if (i == ' ' && countt == 1) {
+                } else if (*i == ' ' && countt == 1) {
                     height = stoi(tmp);
                     tmp="";
                     countt++;
-                } else if (i == ' ' && countt == 2) {
-                    bestDis = stoi(tmp);
-                    tmp="";
+                } else if (i == (s.end()-1) && countt == 2){
+                    //cout<<"check: "<<tmp<<endl;
+                    bestDis = stoi(tmp); 
                     countt++;
                 }
-                tmp += i;
+                
             }
         } else {
             vector<int> vec;
@@ -135,4 +138,89 @@ vector<pair<int, int>> Astar::getNeighbor(pair<int, int> curr, vector<vector<int
     }
 
     return neighbors;
+}
+
+vector<pair<int, int>> Astar::BFS(pair<int, int> start, pair<int, int> target, vector<vector<int>> grid) {
+    map<pair<int, int>, pair<int, int>> parentcell;
+    parentcell[start] = make_pair(-1, -1);
+    auto visited = grid;
+    visited[target.first][target.second] = 0;
+    queue<pair<int, int>> q;
+    q.push(start);
+    visited[start.first][start.second] = 1;
+    while (!q.empty()) {
+        pair<int, int> p = q.front();
+        q.pop();
+        //cout<<"check: "<<p.first<<" "<<p.second<<endl;
+        if (p == target) { 
+            vector<pair<int, int>> path;
+            while (p.first != -1 && p.second != -1){ 
+                path.push_back(make_pair(p.first, p.second));
+                p = parentcell[p];
+            }
+            reverse(path.begin(), path.end());
+            return path;
+        }
+
+        // move left
+        if (p.first - 1 >= 0 && visited[p.first - 1][p.second] == 0) {
+            parentcell[make_pair(p.first-1, p.second)] = p;
+            q.push(make_pair(p.first-1, p.second));
+            visited[p.first - 1][p.second] = 1;
+        }
+ 
+        // moving up
+        if (p.second - 1 >= 0 && visited[p.first][p.second - 1] == 0) {
+            parentcell[make_pair(p.first, p.second-1)] = p;
+            q.push(make_pair(p.first, p.second - 1));
+            visited[p.first][p.second - 1] = 1;
+        }
+
+        // move right
+        if (p.first + 1 < width && visited[p.first + 1][p.second] == 0) {
+            parentcell[make_pair(p.first+1, p.second)] = p;
+            q.push(make_pair(p.first + 1, p.second));
+            visited[p.first + 1][p.second] = 1;
+        }
+ 
+ 
+         // moving down
+        if (p.second + 1 < height && visited[p.first][p.second + 1] == 0) {
+            parentcell[make_pair(p.first, p.second + 1)] = p;
+            q.push(make_pair(p.first, p.second + 1));
+            visited[p.first][p.second + 1] = 1;
+        }
+        
+        // moving upper left
+        if (p.first - 1 >= 0 && p.second - 1 >= 0 && visited[p.first - 1][p.second - 1] == 0) {
+            parentcell[make_pair(p.first-1, p.second-1)] = p;
+            q.push(make_pair(p.first - 1, p.second - 1));
+            visited[p.first - 1][p.second - 1] = 1;
+        }
+ 
+        // moving lower left
+        if (p.second + 1 < height && p.first - 1 >= 0 && visited[p.first-1][p.second + 1] == 0) {
+            parentcell[make_pair(p.first - 1, p.second + 1)] = p;
+            q.push(make_pair(p.first - 1, p.second + 1));
+            visited[p.first - 1][p.second + 1] = 1;
+        }
+
+        // moving upper right
+        if (p.first + 1 < width && p.second - 1 >= 0 && visited[p.first + 1][p.second - 1] == 0) {
+            parentcell[make_pair(p.first + 1, p.second - 1)] = p;
+            q.push(make_pair(p.first + 1, p.second - 1));
+            visited[p.first + 1][p.second - 1] = 1;
+        }
+        
+ 
+         // moving lower right
+        if (p.first + 1 < width && p.second + 1 < height && visited[p.first + 1][p.second + 1] == 0) {
+            parentcell[make_pair(p.first+1, p.second+1)] = p;
+            q.push(make_pair(p.first+1, p.second+1));
+            visited[p.first + 1][p.second + 1] = 1;
+        }
+        
+    }
+    vector<pair<int, int>> empty;
+    return empty;
 }
