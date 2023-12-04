@@ -5,7 +5,7 @@
 #include <cfloat>
 #include <set>
 using namespace std;
-
+/*
 template <typename Heuristic>
 vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target, vector<vector<int>> grid, Heuristic h){
     map<pair<int, int>, pair<int, int>> parentcell;
@@ -42,7 +42,7 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
         vector<pair<int, int>> tmp_record;
         //double minn = 999999;
         //cout<<current.first<<" "<<current.second<<endl;
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 4; i++){
             pair<int, int> it = make_pair(current.first + tmp[i].first, current.second + tmp[i].second);
             int x = it.first;
             int y = it.second;
@@ -56,9 +56,9 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
                 visited[it.first][it.second] = 1;
             }
         }
-        /*for(auto i = re.begin(); i != re.end(); i++) {
+        for(auto i = re.begin(); i != re.end(); i++) {
             astarqueue.push(i->second);
-        }*/
+        }
         if (tmp_record.size() >= 1) {
             for(unsigned i = 0; i < tmp_record.size()-1; i++) {
                 for(unsigned j = i+1; j < tmp_record.size()-1; j++) {
@@ -78,7 +78,7 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
     }
     return empty;
 }
-
+*/
 template <typename Heuristic>
 vector<pair<int, int>> Astar::aStarSearch(vector<vector<int>> grid, pair<int, int> start, pair<int, int> target, Heuristic h) {
     vector<bool> tmpl(height, false);
@@ -127,7 +127,7 @@ vector<pair<int, int>> Astar::aStarSearch(vector<vector<int>> grid, pair<int, in
         j = p.second.second;
         closedList[i][j] = true;
         double gNew, hNew, fNew;
-        for(unsigned k = 0; k < 8; k++) {
+        for(unsigned k = 0; k < 4; k++) {
             int x = i+tmp[k].first;
             int y = j+tmp[k].second;
             //cout<<x<<" "<<y<<" "<<i<<" "<<j<<endl;

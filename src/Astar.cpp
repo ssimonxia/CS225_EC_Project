@@ -112,7 +112,7 @@ vector<pair<int, int>> Astar::aStar(pair<int, int> start, pair<int, int> target,
     return empty;
 }
 */
-
+/*
 vector<pair<int, int>> Astar::getNeighbor(pair<int, int> curr, vector<vector<int>> grid) {
     vector<pair<int, int>> neighbors;
     neighbors.push_back(make_pair(curr.first - 1, curr.second)); // left
@@ -139,7 +139,7 @@ vector<pair<int, int>> Astar::getNeighbor(pair<int, int> curr, vector<vector<int
 
     return neighbors;
 }
-
+*/
 vector<pair<int, int>> Astar::BFS(pair<int, int> start, pair<int, int> target, vector<vector<int>> grid) {
     map<pair<int, int>, pair<int, int>> parentcell;
     parentcell[start] = make_pair(-1, -1);
@@ -190,7 +190,7 @@ vector<pair<int, int>> Astar::BFS(pair<int, int> start, pair<int, int> target, v
             q.push(make_pair(p.first, p.second + 1));
             visited[p.first][p.second + 1] = 1;
         }
-        
+        /*
         // moving upper left
         if (p.first - 1 >= 0 && p.second - 1 >= 0 && visited[p.first - 1][p.second - 1] == 0) {
             parentcell[make_pair(p.first-1, p.second-1)] = p;
@@ -219,7 +219,7 @@ vector<pair<int, int>> Astar::BFS(pair<int, int> start, pair<int, int> target, v
             q.push(make_pair(p.first+1, p.second+1));
             visited[p.first + 1][p.second + 1] = 1;
         }
-        
+        */
     }
     vector<pair<int, int>> empty;
     return empty;
