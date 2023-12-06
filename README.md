@@ -2,7 +2,7 @@
 # Folder
     src: contains the main function of the A* Search Algorithm 
     test: contains the test cases file
-    entry: contains a main function, which can be used to print and test algorithm or run the code
+    entry: contains a main function, which can be used to print and test algorithm or run the code. Also, we         used the main function to print out the runtime of the algorithm for different sizes of data.
     data: contains the test data we used
     code: contains the code used to generate the random test cases
     Document: contains development log, feedback, and proposal
