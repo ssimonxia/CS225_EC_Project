@@ -1,19 +1,27 @@
-# CS225_EC_Project
-# Project Summary
-    For our project, we decide to do A* algorithm
+# CS225_EC_Project A* Search Algorithm
+# Folder
+    src: contains the main function of the A* Search Algorithm 
+    test: contains the test cases file
+    entry: contains a main function, which can be used to print and test algorithm or run the code
+    data: contains the test data we used
+    code: contains the code used to generate the random test cases
+    Document: contains development log, feedback, and proposal
+    The final report and final presentation can be directly seen outsides.
 
-# src
-    Contain the code of the project
-# Dataset
-    Contain the data used to test the project
-# Documents
-    Contain proposal and project details
-# Result
-    Contain the test result and feedback for TA
+# Running Instructions
+    You can open this folder using docker we used in the class. After that, you can run
+    # mkdir build
+    # cd build
+    # cmake ..
+    which is exactly the same as what we do in the class.
+    Then, you can run the test case by
+    # make test
+    # ./test
+    This will take a while since the extremely large dataset takes time to run, especially for BFS.
+    
+    If you want, you can also run the main function by 
+    # make main
+    # ./main
 
-# Plan
-    Week 1: Understand the A* Algorithm and how we will break it down -> Write Deoxygen
-    Week 2: Find dataset and figure out how to format test cases
-    Week 3: Format test cases and begin working on written proposal
-    Before 25th: Finish all up work from past weeks and finalize the proposal and submit
-
+    
+    
